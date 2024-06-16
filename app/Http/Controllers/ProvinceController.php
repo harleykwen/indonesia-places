@@ -8,7 +8,11 @@ class ProvinceController extends Controller
 {
     public function index()
     {
-        $provinces = Province::all();
+        $query_search = request('search');
+
+        $provinces = Province::where('name', 'like', '%' . $query_search . '%')
+            ->orderBy('name', 'asc')
+            ->get();
 
         return response()->json([
             'success' => true,
